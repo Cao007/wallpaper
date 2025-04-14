@@ -22,19 +22,23 @@ const title = 'Hello';
 </script>
 
 <style scoped lang="scss">
-.index-container {
+.index-container {	
 	// 顶部轮播图
 	.top-banner {
 		.swiper {
+			width: 100%;
 			height: 480rpx;
 
 			&-item {
 				width: 100%;
 				height: 100%;
-				padding: 0 20rpx;
+				padding: 30rpx;
+				
 				image {
 					width: 100%;
 					height: 100%;
+					border-radius: 20rpx;
+					overflow: hidden;
 				}
 			}
 		}
