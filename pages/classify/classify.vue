@@ -1,5 +1,5 @@
 <template>
-	<view class="classify-container">
+	<view class="classify-container common-bg-color">
 		<theme-list :isShowMore="false"></theme-list>
 	</view>
 </template>

@@ -5,7 +5,11 @@ swiper-item {
 }
 
 .ellipsis {
-	white-space: nowrap; 
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.common-bg-color {
+	background: linear-gradient(to bottom, transparent, #fff 400rpx), linear-gradient(to right, #beecd8 20%, #f4e2d8);
 }

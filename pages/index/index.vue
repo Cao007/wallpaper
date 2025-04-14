@@ -1,5 +1,5 @@
 <template>
-	<view class="index-container">
+	<view class="index-container common-bg-color">
 		<!-- 顶部轮播图 -->
 		<view class="top-banner">
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="false">
@@ -18,7 +18,7 @@
 		<!-- 公告 -->
 		<view class="notice">
 			<view class="left">
-				<uni-icons type="sound" size="20" color="#27B48F"></uni-icons>
+				<uni-icons type="sound" size="20"></uni-icons>
 				<text>公告</text>
 			</view>
 
@@ -46,7 +46,7 @@
 					<text>每日推荐</text>
 				</template>
 				<template #more-info>
-					<uni-icons type="calendar" size="20" color="#27B48F"></uni-icons>
+					<uni-icons type="calendar" size="20"></uni-icons>
 					<uni-dateformat :date="Date.now()" format="yyyy年MM月dd日"></uni-dateformat>
 				</template>
 			</common-title>
@@ -69,7 +69,7 @@
 					<text>更多+</text>
 				</template>
 			</common-title>
-		
+
 			<theme-list :isShowMore="true"></theme-list>
 		</view>
 	</view>
@@ -118,7 +118,11 @@ const title = 'Hello';
 		.left {
 			display: flex;
 			align-items: center;
-			color: #2ab28e;
+			color: $primary-color;
+
+			:deep(.uni-icons) {
+				color: $primary-color !important;
+			}
 		}
 
 		.middle {
@@ -138,6 +142,9 @@ const title = 'Hello';
 
 	// 每日推荐
 	.recommend {
+		:deep(.uni-icons) {
+			color: $primary-color !important;
+		}
 		.recommend-list {
 			height: 447rpx;
 			white-space: nowrap;

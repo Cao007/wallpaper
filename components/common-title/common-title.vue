@@ -28,7 +28,7 @@
 		display: flex;
 		align-items: center;
 		font-size: 24rpx;
-		color: #27B48F;
+		color: $primary-color;
 	}
 }
 </style>

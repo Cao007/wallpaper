@@ -1,5 +1,5 @@
 <template>
-	<view class="user-container">
+	<view class="user-container common-bg-color">
 		<view class="user-info">
 			<image class="avatar" src="/static/images/logo.png"></image>
 			<view class="nickname">你在狗叫什么</view>
@@ -10,14 +10,14 @@
 		<view class="list">
 			<view class="list-item">
 				<view class="left">
-					<uni-icons type="cloud-download-filled" size="30" color="#27B48F"></uni-icons>
+					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">我的下载</text>
 				</view>
 				<uni-icons type="right" size="30"></uni-icons>
 			</view>
 			<view class="list-item">
 				<view class="left">
-					<uni-icons type="cloud-download-filled" size="30" color="#27B48F"></uni-icons>
+					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">我的评分</text>
 				</view>
 				<uni-icons type="right" size="30"></uni-icons>
@@ -28,21 +28,21 @@
 		<view class="list">
 			<view class="list-item">
 				<view class="left">
-					<uni-icons type="cloud-download-filled" size="30" color="#27B48F"></uni-icons>
+					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">订阅更新</text>
 				</view>
 				<uni-icons type="right" size="30"></uni-icons>
 			</view>
 			<view class="list-item">
 				<view class="left">
-					<uni-icons type="cloud-download-filled" size="30" color="#27B48F"></uni-icons>
+					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">常见问题</text>
 				</view>
 				<uni-icons type="right" size="30"></uni-icons>
 			</view>
 			<view class="list-item">
 				<view class="left">
-					<uni-icons type="cloud-download-filled" size="30" color="#27B48F"></uni-icons>
+					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">联系客服</text>
 				</view>
 				<uni-icons type="right" size="30"></uni-icons>
@@ -50,12 +50,12 @@
 				<button class="custom-customer-service" open-type="contact">联系客服按钮</button>
 				<!-- #endif -->
 				<!-- #ifndef MP -->
-					<button class="custom-customer-service" @click="handleConcat">联系客服按钮</button>
+				<button class="custom-customer-service" @click="handleConcat">联系客服按钮</button>
 				<!-- #endif -->
 			</view>
 			<view class="list-item">
 				<view class="left">
-					<uni-icons type="cloud-download-filled" size="30" color="#27B48F"></uni-icons>
+					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">反馈建议</text>
 				</view>
 				<uni-icons type="right" size="30"></uni-icons>
@@ -71,8 +71,8 @@ const title = ref('hi');
 // #ifndef MP
 const handleConcat = () => {
 	uni.makePhoneCall({
-		phoneNumber: '19045623199',
-	})
+		phoneNumber: '19045623199'
+	});
 };
 // #endif
 </script>
@@ -116,6 +116,7 @@ const handleConcat = () => {
 			align-items: center;
 			justify-content: space-between;
 			padding: 0 20rpx;
+			background-color: #fff;
 
 			&:last-child {
 				border-bottom: none;
@@ -127,6 +128,10 @@ const handleConcat = () => {
 
 				.text {
 					margin-left: 20rpx;
+				}
+
+				:deep(.uni-icons) {
+					color: $primary-color !important;
 				}
 			}
 
