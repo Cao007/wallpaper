@@ -1,52 +1,43 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
+	<view class="index-container">
+		<!-- 顶部轮播图 -->
+		<div class="top-banner">
+			<swiper class="swiper" circular :indicator-dots="true" :autoplay="true">
+				<swiper-item class="swiper-item">
+					<image src="/common/images/banner1.jpg" mode="aspectFill"></image>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<image src="/common/images/banner2.jpg" mode="aspectFill"></image>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<image src="/common/images/banner3.jpg" mode="aspectFill"></image>
+				</swiper-item>
+			</swiper>
+		</div>
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+<script setup>
+const title = 'Hello';
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+<style scoped lang="scss">
+.index-container {
+	// 顶部轮播图
+	.top-banner {
+		.swiper {
+			height: 480rpx;
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
+			&-item {
+				width: 100%;
+				height: 100%;
+				padding: 0 20rpx;
+				image {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
 	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+}
 </style>
