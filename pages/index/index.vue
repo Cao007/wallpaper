@@ -38,6 +38,39 @@
 				<uni-icons type="right" size="20" color="#A8A8A8"></uni-icons>
 			</view>
 		</view>
+
+		<!-- 每日推荐 -->
+		<view class="recommend">
+			<common-title>
+				<template #left-title>
+					<text>每日推荐</text>
+				</template>
+				<template #more-info>
+					<uni-icons type="calendar" size="20" color="#27B48F"></uni-icons>
+					<uni-dateformat :date="Date.now()" format="yyyy年MM月dd日"></uni-dateformat>
+				</template>
+			</common-title>
+
+			<scroll-view class="recommend-list" scroll-x="true">
+				<view class="recommend-item" v-for="item in 11" :key="item">
+					<image src="/common/images/preview_small.webp" mode="aspectFill"></image>
+				</view>
+			</scroll-view>
+		</view>
+
+		<!-- 专题精选 -->
+		<view class="theme">
+			<common-title>
+				<template #left-title>
+					<text>专题精选</text>
+				</template>
+				<template #more-info>
+					<text>更多+</text>
+				</template>
+			</common-title>
+		
+			<theme-list></theme-list>
+		</view>
 	</view>
 </template>
 
@@ -80,7 +113,7 @@ const title = 'Hello';
 		height: 80rpx;
 		margin: 30rpx 0;
 		padding: 0 10rpx;
-		
+
 		.left {
 			display: flex;
 			align-items: center;
@@ -98,6 +131,31 @@ const title = 'Hello';
 				height: 100%;
 				font-size: 30rpx;
 				color: #666;
+			}
+		}
+	}
+
+	// 每日推荐
+	.recommend {
+		.recommend-list {
+			height: 447rpx;
+			white-space: nowrap;
+
+			.recommend-item {
+				display: inline-block;
+				width: 200rpx;
+				height: 100%;
+				margin-right: 14rpx;
+				image {
+					width: 100%;
+					height: 100%;
+					border-radius: 20rpx;
+					overflow: hidden;
+				}
+
+				&:last-child {
+					margin-right: 0;
+				}
 			}
 		}
 	}
