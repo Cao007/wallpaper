@@ -1,6 +1,6 @@
 <template>
 	<view class="classify-container">
-		<theme-list></theme-list>
+		<theme-list :isShowMore="false"></theme-list>
 	</view>
 </template>
 
@@ -12,7 +12,6 @@ const title = ref('hi')
 
 <style scoped lang="scss">
 .classify-container {
-	background-color: pink;
 	padding: 30rpx;
 }
 </style>

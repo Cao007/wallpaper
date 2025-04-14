@@ -7,8 +7,8 @@
 				<view class="mask">明星、美女</view>
 			</navigator>
 
-			<navigator url="" class="theme-item" v-if="themeList.length >= 8">
-				<image src="/common/images/more.jpg" mode="aspectFill"></image>
+			<navigator url="" class="theme-item" v-if="isShowMore">
+				<image class="image" src="/common/images/more.jpg" mode="aspectFill"></image>
 				<view class="mask-full">
 					<uni-icons type="more-filled" size="30" color="#fff"></uni-icons>
 					<text>更多</text>
@@ -19,8 +19,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const themeList = ref([
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
+	'/common/images/classify1.jpg',
 	'/common/images/classify1.jpg',
 	'/common/images/classify1.jpg',
 	'/common/images/classify1.jpg',
@@ -31,8 +41,18 @@ const themeList = ref([
 	'/common/images/classify1.jpg',
 ]);
 
-// 截取前8个数据
-themeList.value = themeList.value.slice(0, 8);
+const props = defineProps({
+	isShowMore: {
+		type: Boolean,
+		default: true,
+	},
+});
+
+// 获取前8个主题
+if(props.isShowMore){
+	themeList.value = themeList.value.slice(0, 8);
+}
+
 </script>
 
 <style lang="scss" scoped>

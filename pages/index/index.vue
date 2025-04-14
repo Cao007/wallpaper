@@ -53,7 +53,8 @@
 
 			<scroll-view class="recommend-list" scroll-x="true">
 				<view class="recommend-item" v-for="item in 11" :key="item">
-					<image src="/common/images/preview_small.webp" mode="aspectFill"></image>
+					<!-- <image src="/common/images/preview_small.webp" mode="aspectFill"></image> -->
+					<image src="https://ai-public.mastergo.com/ai/img_res/d555d25c3768ad690e00818008b9c03b.jpg" mode="aspectFill"></image>
 				</view>
 			</scroll-view>
 		</view>
@@ -69,7 +70,7 @@
 				</template>
 			</common-title>
 		
-			<theme-list></theme-list>
+			<theme-list :isShowMore="true"></theme-list>
 		</view>
 	</view>
 </template>
