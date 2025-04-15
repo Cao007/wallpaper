@@ -4,13 +4,19 @@
 		<view class="top-banner">
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="false">
 				<swiper-item class="swiper-item">
-					<image src="/common/images/banner1.jpg" mode="widthFix"></image>
+					<navigator url="/pages/classifyList/classifyList">
+						<image src="/common/images/banner1.jpg" mode="widthFix"></image>
+					</navigator>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<image src="/common/images/banner2.jpg" mode="widthFix"></image>
+					<navigator url="/pages/classifyList/classifyList">
+						<image src="/common/images/banner2.jpg" mode="widthFix"></image>
+					</navigator>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<image src="/common/images/banner3.jpg" mode="widthFix"></image>
+					<navigator url="/pages/classifyList/classifyList">
+						<image src="/common/images/banner3.jpg" mode="widthFix"></image>
+					</navigator>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -52,10 +58,10 @@
 			</common-title>
 
 			<scroll-view class="recommend-list" scroll-x="true">
-				<view class="recommend-item" v-for="item in 11" :key="item">
+				<navigator url="/pages/preview/preview" class="recommend-item" v-for="item in 11" :key="item">
 					<!-- <image src="/common/images/preview_small.webp" mode="aspectFill"></image> -->
 					<image src="https://ai-public.mastergo.com/ai/img_res/d555d25c3768ad690e00818008b9c03b.jpg" mode="aspectFill"></image>
-				</view>
+				</navigator>
 			</scroll-view>
 		</view>
 

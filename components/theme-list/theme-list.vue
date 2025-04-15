@@ -1,13 +1,13 @@
 <template>
 	<view class="theme-list-container">
 		<view class="theme-list">
-			<navigator url="" class="theme-item" v-for="(item, index) in themeList" :key="index">
+			<navigator url="/pages/classifyList/classifyList" class="theme-item" v-for="(item, index) in themeList" :key="index">
 				<image src="/common/images/classify1.jpg" mode="aspectFill"></image>
 				<text class="tag">标签</text>
 				<view class="mask">明星、美女</view>
 			</navigator>
 
-			<navigator url="" class="theme-item" v-if="isShowMore">
+			<navigator url="/pages/classify/classify" open-type="reLaunch" class="theme-item" v-if="isShowMore">
 				<image class="image" src="/common/images/more.jpg" mode="aspectFill"></image>
 				<view class="mask-full">
 					<uni-icons type="more-filled" size="30" color="#fff"></uni-icons>
