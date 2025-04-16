@@ -8,9 +8,9 @@
 		</swiper>
 
 		<!-- 遮罩层 -->
-		<view class="mask" v-if="isShowMask" @click="isShowMask = false">
+		<view class="mask" v-if="isShowMask" @click="isShowMask = false">			
 			<view class="top-toool">
-				<view class="left-button">
+				<view class="left-button" @click="handleGoBack">
 					<uni-icons type="left"></uni-icons>
 				</view>
 			</view>
@@ -117,9 +117,18 @@
 
 <script setup>
 import { ref } from 'vue';
+import { getStatusBarHeight } from '@/utils/system.js';
+
+// 获取自定义顶部导航栏高度
+const statusBarHeight = getStatusBarHeight() + 'px';
 
 // 控制遮罩层显示
 const isShowMask = ref(false);
+
+// goBack点击事件
+const handleGoBack = () => {
+	uni.navigateBack();
+};
 
 // info弹出层组件实例
 const infoPopup = ref(null);
@@ -193,12 +202,12 @@ const handleDownload = () => {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		padding: 30rpx;
+		padding: 0 30rpx;
 
 		// 顶部工具栏
 		.top-toool {
 			width: 100%;
-			background-color: pink;
+			margin-top: v-bind(statusBarHeight);
 
 			// 返回按钮
 			.left-button {
@@ -265,7 +274,6 @@ const handleDownload = () => {
 				align-items: center;
 				justify-content: space-between;
 				height: 100%;
-				background-color: pink;
 				padding: 0 30rpx; // 扩大可点击的范围
 			}
 		}

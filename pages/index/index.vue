@@ -1,5 +1,8 @@
 <template>
 	<view class="index-container common-bg-color">
+		<!-- 自定义顶部 -->
+		<custom-top-bar></custom-top-bar>
+		
 		<!-- 顶部轮播图 -->
 		<view class="top-banner">
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="false">
@@ -87,7 +90,7 @@ const title = 'Hello';
 
 <style scoped lang="scss">
 .index-container {
-	padding: 30rpx;
+	padding: 0 30rpx;
 
 	// 顶部轮播图
 	.top-banner {

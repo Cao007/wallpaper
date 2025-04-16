@@ -79,7 +79,7 @@ const handleConcat = () => {
 
 <style scoped lang="scss">
 .user-container {
-	padding: 30rpx;
+	padding: 0 30rpx;
 
 	.user-info {
 		display: flex;
