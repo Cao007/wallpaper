@@ -332,7 +332,7 @@ const handleDownload = () => {
 
 					// 评分
 					:deep(.uni-rate) {
-						height: 50px;
+						height: 50rpx;
 						align-items: center;
 					}
 

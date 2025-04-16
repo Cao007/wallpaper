@@ -4,12 +4,22 @@ swiper-item {
 	box-sizing: border-box;
 }
 
+// 单行省略号
 .ellipsis {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
+// 多行省略号
+.ellipsis-2 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+// 公共背景色
 .common-bg-color {
 	background: linear-gradient(to bottom, transparent, #fff 400rpx), linear-gradient(to right, #beecd8 20%, #f4e2d8);
 }
