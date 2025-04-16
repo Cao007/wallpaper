@@ -36,6 +36,60 @@
 				</view>
 			</view>
 		</view>
+
+		<!-- info弹出层 -->
+		<uni-popup ref="infoPopup" type="bottom">
+			<view class="infoPopup">
+				<!-- info顶部标题 -->
+				<view class="top-title">
+					<text class="title">壁纸信息</text>
+					<uni-icons type="closeempty" class="close-btn" @click="handleInfoClose"></uni-icons>
+				</view>
+				<!-- info主体信息 -->
+				<scroll-view class="main-info" scroll-y>
+					<view class="row">
+						<view class="left-title">壁纸ID：</view>
+						<view class="right-content">1231231231231312312313123213</view>
+					</view>
+					<view class="row">
+						<view class="left-title">发布者：</view>
+						<view class="right-content">本图片来用户投稿，非商业使用</view>
+					</view>
+					<view class="row">
+						<view class="left-title">评分：</view>
+						<view class="right-content">
+							<uni-rate allow-half :readonly="true" :size="20" :value="3.5" />
+						</view>
+					</view>
+					<view class="row">
+						<view class="left-title">摘要：</view>
+						<view class="right-content">本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用</view>
+					</view>
+					<view class="row">
+						<view class="left-title">标签：</view>
+						<view class="right-content">
+							<view class="tag">唱歌123</view>
+							<view class="tag">跳舞</view>
+							<view class="tag">rap</view>
+							<view class="tag">唱歌123</view>
+							<view class="tag">跳舞</view>
+							<view class="tag">rap</view>
+							<view class="tag">唱歌123</view>
+							<view class="tag">跳舞</view>
+							<view class="tag">rap</view>
+							<view class="tag">唱歌123</view>
+							<view class="tag">跳舞</view>
+							<view class="tag">rap</view>
+						</view>
+					</view>
+
+					<!-- info底部声明 -->
+					<view class="copyright">
+						声明：本图片来用户投稿，非商业使用，用于免费学习 交流，如侵犯了您的权益，您可以拷贝壁纸ID举报至平 台，邮箱513894357@qq.com，管理将删除侵权壁纸， 维护您的权益。
+					</view>
+				</scroll-view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -45,14 +99,25 @@ import { ref } from 'vue';
 // 控制遮罩层显示
 const isShowMask = ref(false);
 
+// info弹出层组件实例
+const infoPopup = ref(null);
+
+// info弹出层点击事件
 const handleInfo = () => {
-	console.log(1);
+	infoPopup.value.open();
 };
 
+// info弹出层关闭事件
+const handleInfoClose = () => {
+	infoPopup.value.close();
+};
+
+// star弹出层点击事件
 const handleStar = () => {
 	console.log(2);
 };
 
+// download点击事件
 const handleDownload = () => {
 	console.log(3);
 };
@@ -161,6 +226,96 @@ const handleDownload = () => {
 				height: 100%;
 				background-color: pink;
 				padding: 0 30rpx; // 扩大可点击的范围
+			}
+		}
+	}
+
+	// infoPopup弹出层
+	.infoPopup {
+		background-color: #fff;
+		height: 60vh;
+		width: 100%;
+		border-top-left-radius: 20rpx;
+		border-top-right-radius: 20rpx;
+
+		// info顶部标题
+		.top-title {
+			position: relative;
+			width: 100%;
+			height: 100rpx;
+			line-height: 100rpx;
+			text-align: center;
+			font-size: 40rpx;
+			border-bottom: 1rpx solid #ccc;
+
+			:deep(.uni-icons) {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				right: 20rpx;
+				width: 80rpx;
+				height: 80rpx;
+				line-height: 80rpx;
+				font-size: 80rpx !important;
+			}
+		}
+
+		// info主体信息
+		.main-info {
+			box-sizing: border-box;
+			padding: 30rpx 30rpx 0;
+			width: 100%;
+			height: calc(100% - 100rpx);
+
+			.row {
+				width: 100%;
+				display: flex;
+				align-items: flex-start;
+				margin-bottom: 20rpx;
+
+				.left-title {
+					width: 132rpx;
+					height: 50rpx;
+					line-height: 50rpx;
+					text-align: right;
+					font-size: 24rpx;
+					color: #ccc;
+				}
+
+				.right-content {
+					line-height: 50rpx;
+					font-size: 30rpx;
+					display: flex;
+					flex-wrap: wrap;
+					flex: 1;
+					
+					// 评分
+					:deep(.uni-rate) {
+						height: 50px;
+						align-items: center;
+					}
+
+					// 标签
+					.tag {
+						font-size: 24rpx;
+						border: 1px solid $primary-color;
+						padding: 0 20rpx;
+						color: $primary-color;
+						border-radius: 24rpx;
+						margin: 0 10rpx 10rpx 0;
+					}
+				}
+			}
+
+			// info底部声明
+			.copyright {
+				margin-top: 30rpx;
+				width: 100%;
+				font-size: 24rpx;
+				color: #777777;
+				background-color: #f6f6f6;
+				padding: 10rpx;
+				border-radius: 10rpx;
 			}
 		}
 	}
