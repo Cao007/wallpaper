@@ -63,7 +63,9 @@
 					</view>
 					<view class="row">
 						<view class="left-title">摘要：</view>
-						<view class="right-content">本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用</view>
+						<view class="right-content">
+							本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用
+						</view>
 					</view>
 					<view class="row">
 						<view class="left-title">标签：</view>
@@ -90,6 +92,26 @@
 				</scroll-view>
 			</view>
 		</uni-popup>
+
+		<!-- star弹出层 -->
+		<uni-popup ref="starPopup" type="center">
+			<view class="starPopup">
+				<!-- star顶部标题 -->
+				<view class="top-title">
+					<text class="title">{{ isRateScore ? '已经评分' : '壁纸评分' }}</text>
+					<uni-icons type="closeempty" class="close-btn" @click="handleStarClose"></uni-icons>
+				</view>
+				<!-- star主体信息 -->
+				<view class="main-star">
+					<uni-rate :readonly="isRateScore" allow-half touchable :size="40" v-model="rateScore" />
+					<text class="text">{{ rateScore }}分</text>
+				</view>
+				<!-- star底部按钮 -->
+				<view class="bottom-btn" @click="handleStarConfirm">
+					<button class="button" plain :disabled="isRateScore">确认</button>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -112,9 +134,27 @@ const handleInfoClose = () => {
 	infoPopup.value.close();
 };
 
+// star弹出层组件实例
+const starPopup = ref(null);
+// star评分
+const rateScore = ref(1);
+// star是否已经评分
+const isRateScore = ref(false);
+
 // star弹出层点击事件
 const handleStar = () => {
-	console.log(2);
+	starPopup.value.open();
+};
+
+// star弹出层关闭事件
+const handleStarClose = () => {
+	starPopup.value.close();
+};
+
+// star弹出层确认事件
+const handleStarConfirm = () => {
+	isRateScore.value = true;
+	starPopup.value.close();
 };
 
 // download点击事件
@@ -129,6 +169,7 @@ const handleDownload = () => {
 	width: 100%;
 	height: 100vh;
 
+	// 轮播图
 	.swiper {
 		width: 100%;
 		height: 100%;
@@ -253,10 +294,10 @@ const handleDownload = () => {
 				top: 50%;
 				transform: translateY(-50%);
 				right: 20rpx;
-				width: 80rpx;
-				height: 80rpx;
-				line-height: 80rpx;
-				font-size: 80rpx !important;
+				width: 50rpx;
+				height: 50rpx;
+				line-height: 50rpx;
+				font-size: 50rpx !important;
 			}
 		}
 
@@ -288,7 +329,7 @@ const handleDownload = () => {
 					display: flex;
 					flex-wrap: wrap;
 					flex: 1;
-					
+
 					// 评分
 					:deep(.uni-rate) {
 						height: 50px;
@@ -316,6 +357,59 @@ const handleDownload = () => {
 				background-color: #f6f6f6;
 				padding: 10rpx;
 				border-radius: 10rpx;
+			}
+		}
+	}
+
+	// starPopup弹出层
+	.starPopup {
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		height: 25vh;
+		width: 80vw;
+		border-radius: 20rpx;
+
+		// star顶部标题
+		.top-title {
+			position: relative;
+			width: 100%;
+			height: 100rpx;
+			line-height: 100rpx;
+			text-align: center;
+			font-size: 40rpx;
+			border-bottom: 1rpx solid #ccc;
+
+			:deep(.uni-icons) {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				right: 20rpx;
+				width: 50rpx;
+				height: 50rpx;
+				line-height: 50rpx;
+				font-size: 50rpx !important;
+			}
+		}
+
+		// star主体
+		.main-star {
+			display: flex;
+			align-items: center;
+			margin: 40rpx 0;
+
+			.text {
+				color: #ffca3e;
+			}
+		}
+
+		// star底部
+		.bottom-btn {
+			.button {
+				padding: 0 36rpx;
+				border-radius: 36rpx;
+				border-color: #ccc;
 			}
 		}
 	}
