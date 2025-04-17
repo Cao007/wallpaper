@@ -2,7 +2,7 @@
 	<view class="index-container common-bg-color">
 		<!-- 自定义顶部 -->
 		<custom-top-bar></custom-top-bar>
-		
+
 		<!-- 顶部轮播图 -->
 		<view class="top-banner">
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="false">
@@ -25,7 +25,7 @@
 		</view>
 
 		<!-- 公告 -->
-		<view class="notice">
+		<view class="notice" @click="handleGoToNotice">
 			<view class="left">
 				<uni-icons type="sound" size="20"></uni-icons>
 				<text>公告</text>
@@ -85,7 +85,12 @@
 </template>
 
 <script setup>
-const title = 'Hello';
+// 公告跳转
+const handleGoToNotice = () => {
+	uni.navigateTo({
+		url: '/pages/notice/notice-list'
+	});
+};
 </script>
 
 <style scoped lang="scss">
