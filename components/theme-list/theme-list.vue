@@ -1,7 +1,7 @@
 <template>
 	<view class="theme-list-container">
 		<view class="theme-list">
-			<navigator url="/pages/classifyList/classifyList" class="theme-item" v-for="item in classifyArr" :key="item._id">
+			<navigator :url="`/pages/classifyList/classifyList?_id=${item._id}&name=${item.name}`" class="theme-item" v-for="item in classifyArr" :key="item._id">
 				<image :src="item.picurl" mode="aspectFill"></image>
 				<text class="tag" v-if="compareTimestamp(item.updateTime)">{{ compareTimestamp(item.updateTime) }}前更新</text>
 				<view class="mask">{{ item.name }}</view>

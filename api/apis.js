@@ -30,3 +30,11 @@ export function getClassifyApi(data = {}) {
 		data
 	})
 }
+
+// 当前分类列表
+export function getClassifyListApi(data = {}) {
+	return request({
+		url: "/wallList",
+		data
+	})
+}
