@@ -1,13 +1,13 @@
 <template>
 	<view class="theme-list-container">
 		<view class="theme-list">
-			<navigator url="/pages/classifyList/classifyList" class="theme-item" v-for="(item, index) in themeList" :key="index">
-				<image src="/common/images/classify1.jpg" mode="aspectFill"></image>
-				<text class="tag">标签</text>
-				<view class="mask">明星、美女</view>
+			<navigator url="/pages/classifyList/classifyList" class="theme-item" v-for="item in classifyArr" :key="item._id">
+				<image :src="item.picurl" mode="aspectFill"></image>
+				<text class="tag" v-if="compareTimestamp(item.updateTime)">{{ compareTimestamp(item.updateTime) }}前更新</text>
+				<view class="mask">{{ item.name }}</view>
 			</navigator>
 
-			<navigator url="/pages/classify/classify" open-type="reLaunch" class="theme-item" v-if="isShowMore">
+			<navigator url="/pages/classify/classify" open-type="reLaunch" class="theme-item" v-if="showMorePlaceholder">
 				<image class="image" src="/common/images/more.jpg" mode="aspectFill"></image>
 				<view class="mask-full">
 					<uni-icons type="more-filled" size="30" color="#fff"></uni-icons>
@@ -20,39 +20,18 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-const themeList = ref([
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-	'/common/images/classify1.jpg',
-]);
+import { compareTimestamp } from '@/utils/time.js';
 
 const props = defineProps({
-	isShowMore: {
+	showMorePlaceholder: {
 		type: Boolean,
-		default: true,
+		default: true
 	},
+	classifyArr: {
+		type: Array,
+		default: () => []
+	}
 });
-
-// 获取前8个主题
-if(props.isShowMore){
-	themeList.value = themeList.value.slice(0, 8);
-}
-
 </script>
 
 <style lang="scss" scoped>

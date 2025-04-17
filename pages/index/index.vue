@@ -6,19 +6,9 @@
 		<!-- 顶部轮播图 -->
 		<view class="top-banner">
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="false">
-				<swiper-item class="swiper-item">
+				<swiper-item class="swiper-item" v-for="item in bannerList" :key="item._id">
 					<navigator url="/pages/classifyList/classifyList">
-						<image src="/common/images/banner1.jpg" mode="widthFix"></image>
-					</navigator>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<navigator url="/pages/classifyList/classifyList">
-						<image src="/common/images/banner2.jpg" mode="widthFix"></image>
-					</navigator>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<navigator url="/pages/classifyList/classifyList">
-						<image src="/common/images/banner3.jpg" mode="widthFix"></image>
+						<image :src="item.picurl" mode="widthFix"></image>
 					</navigator>
 				</swiper-item>
 			</swiper>
@@ -32,14 +22,8 @@
 			</view>
 
 			<swiper class="middle swiper" circular vertical :autoplay="true">
-				<swiper-item class="swiper-item">
-					<text class="ellipsis">123</text>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<text class="ellipsis">222</text>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<text class="ellipsis">333333333333333333333333333333333333333333333333333333333333333</text>
+				<swiper-item class="swiper-item" v-for="item in noticeList" :key="item._id">
+					<text class="ellipsis">{{ item.title }}</text>
 				</swiper-item>
 			</swiper>
 
@@ -61,9 +45,8 @@
 			</common-title>
 
 			<scroll-view class="recommend-list" scroll-x="true">
-				<navigator url="/pages/preview/preview" class="recommend-item" v-for="item in 11" :key="item">
-					<!-- <image src="/common/images/preview_small.webp" mode="aspectFill"></image> -->
-					<image src="https://ai-public.mastergo.com/ai/img_res/d555d25c3768ad690e00818008b9c03b.jpg" mode="aspectFill"></image>
+				<navigator url="/pages/preview/preview" class="recommend-item" v-for="item in recommendList" :key="item._id">
+					<image :src="item.smallPicurl" mode="aspectFill"></image>
 				</navigator>
 			</scroll-view>
 		</view>
@@ -79,12 +62,44 @@
 				</template>
 			</common-title>
 
-			<theme-list :isShowMore="true"></theme-list>
+			<theme-list :showMorePlaceholder="true" :classifyArr="classifyArr"></theme-list>
 		</view>
 	</view>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
+import { getBannerApi, getNoticeListApi, getRecommendListApi, getClassifyApi } from '@/api/apis.js';
+
+// 获取轮播图数据
+const bannerList = ref([]);
+// 获取公告列表数据
+const noticeList = ref([]);
+// 获取每日推荐数据
+const recommendList = ref([]);
+// 获取大分类数据
+const classifyArr = ref([]);
+
+onLoad(async () => {
+	try {
+		// 并行请求优化性能
+		const [bannerRes, noticeListRes, recommendListRes, classifyRes] = await Promise.all([
+			getBannerApi(),
+			getNoticeListApi(),
+			getRecommendListApi(),
+			getClassifyApi({ pageNum: 1, pageSize: 8 })
+		]);
+
+		bannerList.value = bannerRes.data;
+		noticeList.value = noticeListRes.data;
+		recommendList.value = recommendListRes.data;
+		classifyArr.value = classifyRes.data;
+	} catch (error) {
+		console.log('请求错误：', error);
+	}
+});
+
 // 公告跳转
 const handleGoToNotice = () => {
 	uni.navigateTo({
