@@ -1,11 +1,13 @@
 <template>
-	<view class="classify-list-container">
-		<view class="list">
-			<navigator class="list-item" url="/pages/preview/preview" v-for="item in classifyList" :key="item._id">
-				<image :src="item.smallPicurl" mode="aspectFill"></image>
-			</navigator>
+	<z-paging ref="paging" v-model="classifyList" @query="queryList">
+		<view class="classify-list-container">
+			<view class="list">
+				<navigator class="list-item" url="/pages/preview/preview" v-for="item in classifyList" :key="item._id">
+					<image :src="item.smallPicurl" mode="aspectFill"></image>
+				</navigator>
+			</view>
 		</view>
-	</view>
+	</z-paging>
 </template>
 
 <script setup>
@@ -13,23 +15,35 @@ import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { getClassifyListApi } from '@/api/apis.js';
 
-// 获取当前分类列表数据
+// 获取当前分类列表数据，不用赋值
 const classifyList = ref([]);
+// 获取paging组件实例
+const paging = ref(null);
+const classid = ref('');
+
 onLoad(async ({ _id, name }) => {
+	// 获取分类id
+	classid.value = _id;
+
+	// 修改页面标题
+	uni.setNavigationBarTitle({
+		title: name
+	});
+});
+
+const queryList = async (pageNo, pageSize) => {
 	try {
-		// 修改页面标题
-		uni.setNavigationBarTitle({
-			title: name
-		});
-		
 		const res = await getClassifyListApi({
-			classid: _id
+			classid: classid.value,
+			pageNum: pageNo,
+			pageSize: pageSize
 		});
-		classifyList.value = res.data;
+		paging.value.complete(res.data);
 	} catch (error) {
 		console.log('请求错误：', error);
+		paging.value.complete(false);
 	}
-});
+};
 </script>
 
 <style scoped lang="scss">
