@@ -1,26 +1,33 @@
 <template>
 	<view class="user-container common-bg-color">
+		<view class="navbar" :style="{ height: getNavBarHeight() + 'px' }"></view>
 		<view class="user-info">
 			<image class="avatar" src="/static/images/logo.png"></image>
-			<view class="nickname">你在狗叫什么</view>
-			<view class="address">来自：浙江</view>
+			<view class="nickname">{{ userInfo.IP }}</view>
+			<view class="address">来自：{{ userInfo?.address?.city }}</view>
 		</view>
 
 		<!-- ttop-list -->
 		<view class="list">
-			<view class="list-item">
+			<view class="list-item" @click="handleDownload">
 				<view class="left">
 					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">我的下载</text>
 				</view>
-				<uni-icons type="right" size="30"></uni-icons>
+				<view class="right-content">
+					<text>{{ userInfo?.downloadSize }}个</text>
+					<uni-icons type="right" size="30"></uni-icons>
+				</view>
 			</view>
-			<view class="list-item">
+			<view class="list-item" @click="handleRateScore">
 				<view class="left">
 					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">我的评分</text>
 				</view>
-				<uni-icons type="right" size="30"></uni-icons>
+				<view class="right-content">
+					<text>{{ userInfo?.scoreSize }}个</text>
+					<uni-icons type="right" size="30"></uni-icons>
+				</view>
 			</view>
 		</view>
 
@@ -66,8 +73,38 @@
 
 <script setup>
 import { ref } from 'vue';
-const title = ref('hi');
+import { getNavBarHeight } from '@/utils/system.js';
+import { getUserInfoApi } from '@/api/apis.js';
 
+// 用户信息
+const userInfo = ref({});
+
+// 获取用户信息
+const getUserInfo = async () => {
+	try {
+		const res = await getUserInfoApi();
+		userInfo.value = res.data;
+	} catch (err) {
+		console.log(err);
+	}
+};
+getUserInfo();
+
+// 我的下载
+const handleDownload = () => {
+	uni.navigateTo({
+		url: `/pages/classifyList/classifyList?type=download&name=我的下载`
+	});
+};
+
+// 我的评分
+const handleRateScore = () => {
+	uni.navigateTo({
+		url: `/pages/classifyList/classifyList?type=score&name=我的评分`
+	});
+};
+
+// 联系客服
 // #ifndef MP
 const handleConcat = () => {
 	uni.makePhoneCall({
@@ -133,6 +170,11 @@ const handleConcat = () => {
 				:deep(.uni-icons) {
 					color: $primary-color !important;
 				}
+			}
+
+			.right-content {
+				display: flex;
+				align-items: center;
 			}
 
 			// 客服

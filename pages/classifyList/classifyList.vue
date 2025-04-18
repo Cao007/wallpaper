@@ -12,8 +12,8 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { onLoad, onReady,onUnload, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
-import { getClassifyListApi } from '@/api/apis.js';
+import { onLoad, onReady, onUnload, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
+import { getClassifyListApi, getUserWallListApi } from '@/api/apis.js';
 
 // 获取当前分类列表数据，不用赋值
 const classifyList = ref([]);
@@ -21,11 +21,13 @@ const classifyList = ref([]);
 const paging = ref(null);
 const classid = ref('');
 const pageName = ref('');
+const pageType = ref('');
 
 // 接受页面参数
-onLoad(async ({ _id, name }) => {
+onLoad(async ({ _id, name, type }) => {
 	classid.value = _id;
 	pageName.value = name;
+	pageType.value = type;
 });
 
 onReady(() => {
@@ -41,12 +43,23 @@ onUnload(() => {
 
 const queryList = async (pageNo, pageSize) => {
 	try {
-		const res = await getClassifyListApi({
-			classid: classid.value,
-			pageNum: pageNo,
-			pageSize: pageSize
-		});
-		paging.value.complete(res.data);
+		// 从我的下载或者我的评分跳转过来
+		if (pageType.value === 'download' || pageType.value === 'score') {
+			const res = await getUserWallListApi({
+				type: pageType.value,
+				pageNum: pageNo,
+				pageSize: pageSize
+			});
+			paging.value.complete(res.data);
+		} else {
+			// 从分类跳转过来
+			const res = await getClassifyListApi({
+				classid: classid.value,
+				pageNum: pageNo,
+				pageSize: pageSize
+			});
+			paging.value.complete(res.data);
+		}
 	} catch (error) {
 		console.log('请求错误：', error);
 		paging.value.complete(false);

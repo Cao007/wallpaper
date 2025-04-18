@@ -62,3 +62,18 @@ export function getWallDetailByShareApi(data = {}) {
 		data
 	})
 }
+
+// 用户信息
+export function getUserInfoApi() {
+	return request({
+		url: "/userInfo"
+	})
+}
+
+// 我的评分/下载列表
+export function getUserWallListApi(data = {}) {
+	return request({
+		url: "/userWallList",
+		data
+	})
+}
