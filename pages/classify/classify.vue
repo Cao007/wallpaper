@@ -12,14 +12,14 @@
 
 <script setup>
 import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 import { getClassifyApi } from '@/api/apis.js';
 // 获取大分类数据，不用赋值，直接使用即可
 const classifyArr = ref([]);
 // 获取paging组件实例
 const paging = ref(null);
 
-// 分页请求数据	
+// 分页请求数据
 const queryList = async (pageNo, pageSize) => {
 	try {
 		const res = await getClassifyApi({ pageNum: pageNo, pageSize: pageSize });
@@ -29,6 +29,21 @@ const queryList = async (pageNo, pageSize) => {
 		paging.value.complete(false);
 	}
 };
+
+// 分享给好友
+onShareAppMessage(() => {
+	return {
+		title: 'ccc壁纸——分类',
+		path: '/pages/classify/classify'
+	};
+});
+
+// 分享到朋友圈
+onShareTimeline(() => {
+	return {
+		title: 'ccc壁纸——分类',
+	};
+});
 </script>
 
 <style scoped lang="scss">

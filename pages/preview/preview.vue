@@ -38,7 +38,7 @@
 		</view>
 
 		<!-- info弹出层 -->
-		<uni-popup ref="infoPopup" type="bottom">
+		<uni-popup ref="infoPopup" type="bottom" :safe-area="false">
 			<view class="infoPopup">
 				<!-- info顶部标题 -->
 				<view class="top-title">
@@ -107,9 +107,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 import { getStatusBarHeight } from '@/utils/system.js';
-import { downloadImageApi } from '@/api/apis.js';
+import { downloadImageApi, getWallDetailByShareApi } from '@/api/apis.js';
 
 // 当前分类列表
 const currentClassList = ref(uni.getStorageSync('CLASSIFY_LIST') || []);
@@ -119,14 +119,23 @@ currentClassList.value = currentClassList.value.map((item) => {
 	return item;
 });
 
+// 当前图片id
+const currentImgid = ref('');
+// 当前索引
+const currentIndex = ref(0);
 // 当前图片信息
 const currentImgInfo = ref({});
 
-// 当前索引
-const currentIndex = ref(0);
-
 // 获取路由参数
-onLoad(({ classid, index }) => {
+onLoad(async ({ _id='', index=0, type='' }) => {
+	if (type === 'share') {
+		const res = await getWallDetailByShareApi({ id: _id });
+		currentClassList.value = res.data.map((item) => {
+			item.smallPicurl = item.smallPicurl.replace('_small.webp', '.jpg');
+			return item;
+		});
+	}
+	currentImgid.value = _id;
 	currentIndex.value = Number(index);
 	currentImgInfo.value = currentClassList.value[currentIndex.value];
 });
@@ -152,7 +161,13 @@ const isShowMask = ref(false);
 
 // goBack点击事件
 const handleGoBack = () => {
-	uni.navigateBack();
+	uni.navigateBack({
+		fail() {
+			uni.reLaunch({
+				url: '/pages/index/index'
+			});
+		}
+	});
 };
 
 // info弹出层组件实例
@@ -268,6 +283,22 @@ const handleDownload = async () => {
 	}
 	// #endif
 };
+
+// 分享给好友
+onShareAppMessage(() => {
+	return {
+		title: `ccc壁纸`,
+		path: `/pages/preview/preview?_id=${currentImgid.value}&index=0&type=share`
+	};
+});
+
+// 分享到朋友圈
+onShareTimeline(() => {
+	return {
+		title: 'ccc壁纸',
+		query: `/pages/preview/preview?_id=${currentImgid.value}&index=0&type=share`
+	};
+});
 </script>
 
 <style scoped lang="scss">

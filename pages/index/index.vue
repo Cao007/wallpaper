@@ -45,7 +45,7 @@
 			</common-title>
 
 			<scroll-view class="recommend-list" scroll-x="true">
-				<navigator :url="`/pages/preview/preview?classid=${item.classid}&index=${index}`" class="recommend-item" v-for="(item, index) in recommendList" :key="item._id">
+				<navigator @click="goPreview(item, index)" class="recommend-item" v-for="(item, index) in recommendList" :key="item._id">
 					<image :src="item.smallPicurl" mode="aspectFill"></image>
 				</navigator>
 			</scroll-view>
@@ -69,7 +69,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 import { getBannerApi, getNoticeListApi, getRecommendListApi, getClassifyApi } from '@/api/apis.js';
 
 // 获取轮播图数据
@@ -103,11 +103,34 @@ onLoad(async () => {
 	}
 });
 
+// 分享给好友
+onShareAppMessage(() => {
+	return {
+		title: 'ccc壁纸',
+		path: '/pages/index/index'
+	};
+});
+
+// 分享到朋友圈
+onShareTimeline(() => {
+	return {
+		title: 'ccc壁纸'
+	};
+});
+
 // 公告跳转
 const handleGoToNotice = () => {
 	uni.navigateTo({
 		url: '/pages/notice/notice-list'
 	});
+};
+
+// 跳转到预览页
+const goPreview = (item, index) => {
+	uni.navigateTo({
+		url: `/pages/preview/preview?_id=${item._id}&index=${index}`
+	});
+	uni.setStorageSync('CLASSIFY_LIST', recommendList.value);
 };
 </script>
 

@@ -2,7 +2,7 @@
 	<z-paging ref="paging" v-model="classifyList" @query="queryList">
 		<view class="classify-list-container">
 			<view class="list">
-				<navigator class="list-item" :url="`/pages/preview/preview?classid=${item.classid}&index=${index}`" v-for="(item,index) in classifyList" :key="item._id">
+				<navigator class="list-item" :url="`/pages/preview/preview?_id=${item._id}&index=${index}`" v-for="(item, index) in classifyList" :key="item._id">
 					<image :src="item.smallPicurl" mode="aspectFill"></image>
 				</navigator>
 			</view>
@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onReady,onUnload, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 import { getClassifyListApi } from '@/api/apis.js';
 
 // 获取当前分类列表数据，不用赋值
@@ -20,15 +20,23 @@ const classifyList = ref([]);
 // 获取paging组件实例
 const paging = ref(null);
 const classid = ref('');
+const pageName = ref('');
 
+// 接受页面参数
 onLoad(async ({ _id, name }) => {
-	// 获取分类id
 	classid.value = _id;
+	pageName.value = name;
+});
 
-	// 修改页面标题
+onReady(() => {
 	uni.setNavigationBarTitle({
-		title: name
+		title: pageName.value
 	});
+});
+
+onUnload(() => {
+	// 清除本地存储的分类列表数据
+	uni.removeStorageSync('CLASSIFY_LIST');
 });
 
 const queryList = async (pageNo, pageSize) => {
@@ -55,6 +63,22 @@ watch(
 		deep: true
 	}
 );
+
+// 分享给好友
+onShareAppMessage(() => {
+	return {
+		title: `ccc壁纸——${pageName.value}`,
+		path: `/pages/classifyList/classifyList?_id=${classid.value}&name=${pageName.value}`
+	};
+});
+
+// 分享到朋友圈
+onShareTimeline(() => {
+	return {
+		title: `ccc壁纸——${pageName.value}`,
+		query: `_id=${classid.value}&name=${pageName.value}`
+	};
+});
 </script>
 
 <style scoped lang="scss">

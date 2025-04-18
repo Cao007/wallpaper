@@ -54,3 +54,11 @@ export function downloadImageApi(data = {}) {
 		data
 	})
 }
+
+// 单张壁纸详情（主要在分享小程序时预览图片）
+export function getWallDetailByShareApi(data = {}) {
+	return request({
+		url: "/detailWall",
+		data
+	})
+}
