@@ -16,6 +16,14 @@ export function getNoticeListApi() {
 	})
 }
 
+// 获取公告详情
+export function getNoticeDetailApi(data = {}) {
+	return request({
+		url: "/wallNewsDetail",
+		data
+	})
+}
+
 // 每日推荐
 export function getRecommendListApi() {
 	return request({

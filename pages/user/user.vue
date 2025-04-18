@@ -33,14 +33,14 @@
 
 		<!-- bottom-list -->
 		<view class="list">
-			<view class="list-item">
+			<view class="list-item" @click="handleUpdate">
 				<view class="left">
 					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">订阅更新</text>
 				</view>
 				<uni-icons type="right" size="30"></uni-icons>
 			</view>
-			<view class="list-item">
+			<view class="list-item" @click="handleQuestion">
 				<view class="left">
 					<uni-icons type="cloud-download-filled" size="30"></uni-icons>
 					<text class="text">常见问题</text>
@@ -101,6 +101,20 @@ const handleDownload = () => {
 const handleRateScore = () => {
 	uni.navigateTo({
 		url: `/pages/classifyList/classifyList?type=score&name=我的评分`
+	});
+};
+
+// 订阅更新
+const handleUpdate = () => {
+	uni.navigateTo({
+		url: `/pages/notice/notice-detail?id=653507c6466d417a3718e94b`
+	});
+};
+
+// 常见问题
+const handleQuestion = () => {
+	uni.navigateTo({
+		url: `/pages/notice/notice-detail?id=6536358ce0ec19c8d67fbe82`
 	});
 };
 
