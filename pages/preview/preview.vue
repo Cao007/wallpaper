@@ -71,7 +71,7 @@
 					<view class="row">
 						<view class="left-title">标签：</view>
 						<view class="right-content">
-							<view class="tag" v-for="item in currentImgInfo.tabs">{{ item }}</view>
+							<view class="tag" v-for="item in currentImgInfo.tabs" :key="item">{{ item }}</view>
 						</view>
 					</view>
 
@@ -109,6 +109,7 @@
 import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { getStatusBarHeight } from '@/utils/system.js';
+import { downloadImageApi } from '@/api/apis.js';
 
 // 当前分类列表
 const currentClassList = ref(uni.getStorageSync('CLASSIFY_LIST') || []);
@@ -191,8 +192,81 @@ const handleStarConfirm = () => {
 };
 
 // download点击事件
-const handleDownload = () => {
-	console.log(3);
+const handleDownload = async () => {
+	// #ifdef H5
+	uni.showModal({
+		content: '请长按保存壁纸',
+		showCancel: false
+	});
+	// #endif
+
+	// #ifndef H5
+	try {
+		uni.showLoading({
+			title: '下载中...',
+			mask: true
+		});
+		const { classid, _id: wallId } = currentImgInfo.value;
+		const res = await downloadImageApi({
+			classid,
+			wallId
+		});
+		if (res.errCode != 0) throw res;
+		uni.getImageInfo({
+			src: currentImgInfo.value.smallPicurl,
+			success: (res) => {
+				uni.saveImageToPhotosAlbum({
+					filePath: res.path,
+					success: (res) => {
+						uni.showToast({
+							title: '保存成功，请到相册查看',
+							icon: 'none'
+						});
+					},
+					fail: (err) => {
+						if (err.errMsg == 'saveImageToPhotosAlbum:fail cancel') {
+							uni.showToast({
+								title: '保存失败，请重新点击下载',
+								icon: 'none'
+							});
+							return;
+						}
+						uni.showModal({
+							title: '授权提示',
+							content: '需要授权保存相册',
+							success: (res) => {
+								if (res.confirm) {
+									uni.openSetting({
+										success: (setting) => {
+											console.log(setting);
+											if (setting.authSetting['scope.writePhotosAlbum']) {
+												uni.showToast({
+													title: '获取授权成功',
+													icon: 'none'
+												});
+											} else {
+												uni.showToast({
+													title: '获取权限失败',
+													icon: 'none'
+												});
+											}
+										}
+									});
+								}
+							}
+						});
+					},
+					complete: () => {
+						uni.hideLoading();
+					}
+				});
+			}
+		});
+	} catch (err) {
+		console.log(err);
+		uni.hideLoading();
+	}
+	// #endif
 };
 </script>
 
@@ -298,7 +372,8 @@ const handleDownload = () => {
 				align-items: center;
 				justify-content: space-between;
 				height: 100%;
-				padding: 0 30rpx; // 扩大可点击的范围
+				flex: 1;
+				margin: 0 4rpx;
 			}
 		}
 	}

@@ -46,3 +46,11 @@ export function setWallScoreApi(data = {}) {
 		data
 	})
 }
+
+// 下载
+export function downloadImageApi(data = {}) {
+	return request({
+		url: "/downloadWall",
+		data
+	})
+}
