@@ -5,7 +5,9 @@
 			<text class="author">{{ noticeDetail.author }}</text>
 			<uni-dateformat :date="noticeDetail.publish_date" format="yyyy/MM/dd hh:mm:ss"></uni-dateformat>
 		</view>
-		<view class="notice-main" v-html="noticeDetail.content"></view>
+		<view class="notice-main">
+			<mp-html :content="noticeDetail.content" />
+		</view>
 		<text class="read">阅读 {{ noticeDetail.view_count }}</text>
 	</view>
 </template>
