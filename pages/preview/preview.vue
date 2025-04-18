@@ -49,39 +49,29 @@
 				<scroll-view class="main-info" scroll-y>
 					<view class="row">
 						<view class="left-title">壁纸ID：</view>
-						<view class="right-content">1231231231231312312313123213</view>
+						<view class="right-content">{{ currentImgInfo._id }}</view>
 					</view>
 					<view class="row">
 						<view class="left-title">发布者：</view>
-						<view class="right-content">本图片来用户投稿，非商业使用</view>
+						<view class="right-content">{{ currentImgInfo.nickname }}</view>
 					</view>
 					<view class="row">
 						<view class="left-title">评分：</view>
 						<view class="right-content">
-							<uni-rate allow-half :readonly="true" :size="20" :value="3.5" />
+							<uni-rate allow-half :readonly="true" :size="20" :value="currentImgInfo.score" />
+							<text> {{ currentImgInfo.score }}分</text>
 						</view>
 					</view>
 					<view class="row">
 						<view class="left-title">摘要：</view>
 						<view class="right-content">
-							本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用本图片来用户投稿，非商业使用
+							{{ currentImgInfo.description }}
 						</view>
 					</view>
 					<view class="row">
 						<view class="left-title">标签：</view>
 						<view class="right-content">
-							<view class="tag">唱歌123</view>
-							<view class="tag">跳舞</view>
-							<view class="tag">rap</view>
-							<view class="tag">唱歌123</view>
-							<view class="tag">跳舞</view>
-							<view class="tag">rap</view>
-							<view class="tag">唱歌123</view>
-							<view class="tag">跳舞</view>
-							<view class="tag">rap</view>
-							<view class="tag">唱歌123</view>
-							<view class="tag">跳舞</view>
-							<view class="tag">rap</view>
+							<view class="tag" v-for="item in currentImgInfo.tabs">{{ item }}</view>
 						</view>
 					</view>
 
@@ -120,12 +110,24 @@ import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { getStatusBarHeight } from '@/utils/system.js';
 
+// 当前分类列表
+const currentClassList = ref(uni.getStorageSync('CLASSIFY_LIST') || []);
+// 替换图片格式
+currentClassList.value = currentClassList.value.map((item) => {
+	item.smallPicurl = item.smallPicurl.replace('_small.webp', '.jpg');
+	return item;
+});
+
+// 当前图片信息
+const currentImgInfo = ref({});
+
 // 当前索引
 const currentIndex = ref(0);
 
 // 获取路由参数
 onLoad(({ classid, index }) => {
 	currentIndex.value = Number(index);
+	currentImgInfo.value = currentClassList.value[currentIndex.value];
 });
 
 // 获取相邻图片
@@ -138,15 +140,8 @@ const isNear = (index) => {
 // 轮播图切换事件
 const handleSwiperChange = (e) => {
 	currentIndex.value = e.detail.current;
+	currentImgInfo.value = currentClassList.value[currentIndex.value];
 };
-
-// 当前分类列表
-const currentClassList = ref(uni.getStorageSync('CLASSIFY_LIST') || []);
-// 替换图片格式
-currentClassList.value = currentClassList.value.map((item) => {
-	item.smallPicurl = item.smallPicurl.replace('_small.webp', '.jpg');
-	return item;
-});
 
 // 获取自定义顶部导航栏高度
 const statusBarHeight = getStatusBarHeight() + 'px';
