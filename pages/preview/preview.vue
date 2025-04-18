@@ -26,9 +26,9 @@
 					<uni-icons type="info"></uni-icons>
 					<text>信息</text>
 				</view>
-				<view class="icon-box star" @click.stop="handleStar">
+				<view class="icon-box star" @click.stop="handleStarOpen">
 					<uni-icons type="star"></uni-icons>
-					<text>5分</text>
+					<text>{{ currentImgInfo.score }}分</text>
 				</view>
 				<view class="icon-box download" @click.stop="handleDownload">
 					<uni-icons type="download"></uni-icons>
@@ -59,7 +59,7 @@
 						<view class="left-title">评分：</view>
 						<view class="right-content">
 							<uni-rate allow-half :readonly="true" :size="20" :value="currentImgInfo.score" />
-							<text> {{ currentImgInfo.score }}分</text>
+							<text>{{ currentImgInfo.score }}分</text>
 						</view>
 					</view>
 					<view class="row">
@@ -93,8 +93,8 @@
 				</view>
 				<!-- star主体信息 -->
 				<view class="main-star">
-					<uni-rate :readonly="isRateScore" allow-half touchable :size="40" v-model="rateScore" />
-					<text class="text">{{ rateScore }}分</text>
+					<uni-rate :readonly="isRateScore" allow-half touchable :size="40" v-model="userScore" />
+					<text class="text">{{ userScore }}分</text>
 				</view>
 				<!-- star底部按钮 -->
 				<view class="bottom-btn" @click="handleStarConfirm">
@@ -170,12 +170,12 @@ const handleInfoClose = () => {
 // star弹出层组件实例
 const starPopup = ref(null);
 // star评分
-const rateScore = ref(1);
+const userScore = ref(0);
 // star是否已经评分
 const isRateScore = ref(false);
 
-// star弹出层点击事件
-const handleStar = () => {
+// star弹出层打开事件
+const handleStarOpen = () => {
 	starPopup.value.open();
 };
 

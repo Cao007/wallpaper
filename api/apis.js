@@ -38,3 +38,11 @@ export function getClassifyListApi(data = {}) {
 		data
 	})
 }
+
+// 设置壁纸评分
+export function setWallScoreApi(data = {}) {
+	return request({
+		url: "/setupScore",
+		data
+	})
+}
