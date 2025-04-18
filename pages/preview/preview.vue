@@ -1,20 +1,20 @@
 <template>
 	<view class="preview-container">
 		<!-- 轮播图 -->
-		<swiper class="swiper" circular>
-			<swiper-item v-for="item in 5" :key="item" class="swiper-item">
-				<image src="/common/images/preview1.jpg" mode="aspectFill" @click.stop="isShowMask = true"></image>
+		<swiper class="swiper" circular :current="currentIndex" @change="handleSwiperChange">
+			<swiper-item v-for="(item, index) in currentClassList" :key="item._id" class="swiper-item">
+				<image v-if="isNear(index)" lazy-load :src="item.smallPicurl" mode="aspectFill" @click.stop="isShowMask = true"></image>
 			</swiper-item>
 		</swiper>
 
 		<!-- 遮罩层 -->
-		<view class="mask" v-if="isShowMask" @click="isShowMask = false">			
+		<view class="mask" v-if="isShowMask" @click="isShowMask = false">
 			<view class="top-toool">
 				<view class="left-button" @click="handleGoBack">
 					<uni-icons type="left"></uni-icons>
 				</view>
 			</view>
-			<view class="pages">7 / 12</view>
+			<view class="pages">{{ currentIndex + 1 }} / {{ currentClassList.length }}</view>
 			<view class="time">
 				<uni-dateformat :date="Date.now()" format="hh:mm"></uni-dateformat>
 			</view>
@@ -117,7 +117,36 @@
 
 <script setup>
 import { ref } from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
 import { getStatusBarHeight } from '@/utils/system.js';
+
+// 当前索引
+const currentIndex = ref(0);
+
+// 获取路由参数
+onLoad(({ classid, index }) => {
+	currentIndex.value = Number(index);
+});
+
+// 获取相邻图片
+const isNear = (index) => {
+	const len = currentClassList.value.length;
+	// 前一个、当前、后一个，以及首尾循环时
+	return index === currentIndex.value || index === (currentIndex.value + 1) % len || index === (currentIndex.value - 1 + len) % len;
+};
+
+// 轮播图切换事件
+const handleSwiperChange = (e) => {
+	currentIndex.value = e.detail.current;
+};
+
+// 当前分类列表
+const currentClassList = ref(uni.getStorageSync('CLASSIFY_LIST') || []);
+// 替换图片格式
+currentClassList.value = currentClassList.value.map((item) => {
+	item.smallPicurl = item.smallPicurl.replace('_small.webp', '.jpg');
+	return item;
+});
 
 // 获取自定义顶部导航栏高度
 const statusBarHeight = getStatusBarHeight() + 'px';

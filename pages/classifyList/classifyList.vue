@@ -2,7 +2,7 @@
 	<z-paging ref="paging" v-model="classifyList" @query="queryList">
 		<view class="classify-list-container">
 			<view class="list">
-				<navigator class="list-item" url="/pages/preview/preview" v-for="item in classifyList" :key="item._id">
+				<navigator class="list-item" :url="`/pages/preview/preview?classid=${item.classid}&index=${index}`" v-for="(item,index) in classifyList" :key="item._id">
 					<image :src="item.smallPicurl" mode="aspectFill"></image>
 				</navigator>
 			</view>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { getClassifyListApi } from '@/api/apis.js';
 
@@ -44,6 +44,17 @@ const queryList = async (pageNo, pageSize) => {
 		paging.value.complete(false);
 	}
 };
+
+// 监听classifyList变化，并存储到本地
+watch(
+	classifyList,
+	(newVal) => {
+		uni.setStorageSync('CLASSIFY_LIST', newVal);
+	},
+	{
+		deep: true
+	}
+);
 </script>
 
 <style scoped lang="scss">

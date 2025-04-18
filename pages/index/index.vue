@@ -45,7 +45,7 @@
 			</common-title>
 
 			<scroll-view class="recommend-list" scroll-x="true">
-				<navigator url="/pages/preview/preview" class="recommend-item" v-for="item in recommendList" :key="item._id">
+				<navigator :url="`/pages/preview/preview?classid=${item.classid}&index=${index}`" class="recommend-item" v-for="(item, index) in recommendList" :key="item._id">
 					<image :src="item.smallPicurl" mode="aspectFill"></image>
 				</navigator>
 			</scroll-view>
@@ -95,6 +95,9 @@ onLoad(async () => {
 		noticeList.value = noticeListRes.data;
 		recommendList.value = recommendListRes.data;
 		classifyArr.value = classifyRes.data;
+
+		// 缓存数据
+		uni.setStorageSync('CLASSIFY_LIST', recommendList.value);
 	} catch (error) {
 		console.log('请求错误：', error);
 	}
