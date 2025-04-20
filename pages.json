@@ -48,6 +48,13 @@
 			{
 				"navigationBarTitleText" : "公共详情"
 			}
+		},
+		{
+			"path" : "pages/search/search",
+			"style" : 
+			{
+				"navigationBarTitleText" : "搜索页面"
+			}
 		}
 	],
 	"globalStyle": {

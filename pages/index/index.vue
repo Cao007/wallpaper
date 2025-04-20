@@ -7,7 +7,13 @@
 		<view class="top-banner">
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="false">
 				<swiper-item class="swiper-item" v-for="item in bannerList" :key="item._id">
-					<navigator url="/pages/classifyList/classifyList">
+					<navigator
+						v-if="item.target === 'self'"
+						:url="`/pages/classifyList/classifyList?_id=${item.url.split('&')[0].split('=')[1]}&name=${item.url.split('&')[1].split('=')[1]}`"
+					>
+						<image :src="item.picurl" mode="widthFix"></image>
+					</navigator>
+					<navigator v-else-if="item.target === 'miniProgram'" target="miniProgram" :app-id="item.appid" :url="item.url">
 						<image :src="item.picurl" mode="widthFix"></image>
 					</navigator>
 				</swiper-item>
@@ -58,7 +64,7 @@
 					<text>专题精选</text>
 				</template>
 				<template #more-info>
-					<text>更多+</text>
+					<navigator url="/pages/classify/classify" open-type="reLaunch">更多+</navigator>
 				</template>
 			</common-title>
 

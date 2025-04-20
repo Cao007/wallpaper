@@ -6,7 +6,7 @@
 			<!-- 标题栏（和胶囊按钮在同一行） -->
 			<view class="title-bar" :style="{ height: getTitleBarHeight() + 'px' }">
 				<view class="title">{{ title }}</view>
-				<view class="search">
+				<view class="search" @click="gotoSearch">
 					<uni-icons type="search" size="20" color="#888"></uni-icons>
 					<text class="text">搜索</text>
 				</view>
@@ -28,6 +28,13 @@ const props = defineProps({
 		default: 'ccc壁纸'
 	}
 });
+
+// 跳转到搜索
+const gotoSearch = () => {
+	uni.navigateTo({
+		url: '/pages/search/search'
+	});
+};
 </script>
 
 <style scoped lang="scss">

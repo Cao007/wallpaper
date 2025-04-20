@@ -85,3 +85,11 @@ export function getUserWallListApi(data = {}) {
 		data
 	})
 }
+
+// 搜索
+export function searchApi(data = {}) {
+	return request({
+		url: "/searchWall",
+		data
+	})
+}
