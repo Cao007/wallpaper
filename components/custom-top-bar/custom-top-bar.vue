@@ -25,7 +25,7 @@ import { getStatusBarHeight, getTitleBarHeight, getNavBarHeight } from '@/utils/
 const props = defineProps({
 	title: {
 		type: String,
-		default: 'ccc壁纸'
+		default: '蟑螂侠'
 	}
 });
 

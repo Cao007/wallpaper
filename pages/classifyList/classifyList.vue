@@ -80,7 +80,7 @@ watch(
 // 分享给好友
 onShareAppMessage(() => {
 	return {
-		title: `ccc壁纸——${pageName.value}`,
+		title: `蟑螂侠——${pageName.value}`,
 		path: `/pages/classifyList/classifyList?_id=${classid.value}&name=${pageName.value}`
 	};
 });
@@ -88,7 +88,7 @@ onShareAppMessage(() => {
 // 分享到朋友圈
 onShareTimeline(() => {
 	return {
-		title: `ccc壁纸——${pageName.value}`,
+		title: `蟑螂侠——${pageName.value}`,
 		query: `_id=${classid.value}&name=${pageName.value}`
 	};
 });

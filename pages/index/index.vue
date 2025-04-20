@@ -112,7 +112,7 @@ onLoad(async () => {
 // 分享给好友
 onShareAppMessage(() => {
 	return {
-		title: 'ccc壁纸',
+		title: '蟑螂侠',
 		path: '/pages/index/index'
 	};
 });
@@ -120,7 +120,7 @@ onShareAppMessage(() => {
 // 分享到朋友圈
 onShareTimeline(() => {
 	return {
-		title: 'ccc壁纸'
+		title: '蟑螂侠'
 	};
 });
 

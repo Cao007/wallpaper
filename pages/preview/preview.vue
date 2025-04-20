@@ -287,7 +287,7 @@ const handleDownload = async () => {
 // 分享给好友
 onShareAppMessage(() => {
 	return {
-		title: `ccc壁纸`,
+		title: `蟑螂侠`,
 		path: `/pages/preview/preview?_id=${currentImgid.value}&index=0&type=share`
 	};
 });
@@ -295,7 +295,7 @@ onShareAppMessage(() => {
 // 分享到朋友圈
 onShareTimeline(() => {
 	return {
-		title: 'ccc壁纸',
+		title: '蟑螂侠',
 		query: `/pages/preview/preview?_id=${currentImgid.value}&index=0&type=share`
 	};
 });

@@ -33,7 +33,7 @@ const queryList = async (pageNo, pageSize) => {
 // 分享给好友
 onShareAppMessage(() => {
 	return {
-		title: 'ccc壁纸——分类',
+		title: '蟑螂侠——分类',
 		path: '/pages/classify/classify'
 	};
 });
@@ -41,7 +41,7 @@ onShareAppMessage(() => {
 // 分享到朋友圈
 onShareTimeline(() => {
 	return {
-		title: 'ccc壁纸——分类',
+		title: '蟑螂侠——分类',
 	};
 });
 </script>
